@@ -109,11 +109,10 @@ SETGATE(intr, 0,1,2,3);
 请分析 [list.h](https://github.com/chyyuu/ucore_lab/blob/master/labcodes/lab2/libs/list.h)内容中大致的含义，并能include这个文件，利用其结构和功能编写一个数据结构链表操作的小C程序
 - [x]  
 
-> 
+>
 ```
 #include "stdio.h"
 #include "list.h"
-
 
 struct myList{
 	int idx;
@@ -130,7 +129,6 @@ int main()
     printf("mylist0.idx = %d\nmylist0.link.next.idx = %d\nmylist0.link.next.link.prev.idx = %d", mylist0.idx, to_struct(mylist0.link.next, struct myList, link)->idx, to_struct(mylist0.link.next->prev, struct myList, link)->idx);
 	return 0;
 }
-
 ```
 
 ---
