@@ -26,7 +26,7 @@
 如何把一个在gdb中或执行过程中出现的物理/线性地址与你写的代码源码位置对应起来？
 - [x]  
 
->   
+>   找到基准地址计算偏移量。
 
 了解函数调用栈对lab实验有何帮助？
 - [x]  
@@ -47,17 +47,17 @@
 搭建好实验环境，请描述碰到的困难和解决的过程。
 - [x]  
 
-> 
+> 之前已有ubuntu环境，通过apt安装各个工具包，未遇到困难。
 
 熟悉基本的git命令行操作命令，从github上的[ucore git repo](http://www.github.com/chyyuu/ucore_lab)下载ucore lab实验
 - [x] 
 
-> 
+> 已完成。
 
 尝试用qemu+gdb（or ECLIPSE-CDT）调试lab1
 - [x] 
 
-> 
+> 已完成。
 
 对于如下的代码段，请说明”：“后面的数字是什么含义
 ```
@@ -77,7 +77,7 @@ struct gatedesc {
 
 - [x]  
 
-> 
+> 表示位域，如“unsigned gd_off_15_0 : 16;”中的16表示gd_off_15_0占16个bit。
 
 对于如下的代码段，
 ```
@@ -104,12 +104,32 @@ SETGATE(intr, 0,1,2,3);
 
 - [x]  
 
-> 
+> 编译错误。修改后得10002。
 
 请分析 [list.h](https://github.com/chyyuu/ucore_lab/blob/master/labcodes/lab2/libs/list.h)内容中大致的含义，并能include这个文件，利用其结构和功能编写一个数据结构链表操作的小C程序
 - [x]  
 
 > 
+#include "stdio.h"
+#include "list.h"
+using namespace std;
+
+struct myList{
+	int idx;
+	list_entry_t link;
+}
+
+int main()
+{
+    struct myList mylist1, mylist0;
+    mylist1.idx = 1;
+    mylist0.idx = 0;
+    mylist0.link.list_init(mylist0.link);
+    mylist0.link.list_add(mylist1.link);
+	return 0;
+}
+
+
 
 ---
 
