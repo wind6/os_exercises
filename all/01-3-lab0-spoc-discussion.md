@@ -113,12 +113,10 @@ SETGATE(intr, 0,1,2,3);
 ```
 #include "stdio.h"
 #include "list.h"
-
 struct myList{
 	int idx;
 	list_entry_t link;
 };
-
 int main()
 {
     struct myList mylist1, mylist0;
