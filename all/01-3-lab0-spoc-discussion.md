@@ -110,6 +110,7 @@ SETGATE(intr, 0,1,2,3);
 - [x]  
 
 > 
+```
 #include "stdio.h"
 #include "list.h"
 
@@ -130,7 +131,7 @@ int main()
 	return 0;
 }
 
-
+```
 
 ---
 
