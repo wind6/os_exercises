@@ -112,20 +112,21 @@ SETGATE(intr, 0,1,2,3);
 > 
 #include "stdio.h"
 #include "list.h"
-using namespace std;
+
 
 struct myList{
 	int idx;
 	list_entry_t link;
-}
+};
 
 int main()
 {
     struct myList mylist1, mylist0;
     mylist1.idx = 1;
     mylist0.idx = 0;
-    mylist0.link.list_init(mylist0.link);
-    mylist0.link.list_add(mylist1.link);
+    list_init(&mylist0.link);
+    list_add(&mylist0.link, &mylist1.link);
+    printf("mylist0.idx = %d\nmylist0.link.next.idx = %d\nmylist0.link.next.link.prev.idx = %d", mylist0.idx, to_struct(mylist0.link.next, struct myList, link)->idx, to_struct(mylist0.link.next->prev, struct myList, link)->idx);
 	return 0;
 }
 
