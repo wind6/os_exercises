@@ -35,6 +35,7 @@
  ```
  
  1. 以ucore lab8的answer为例，uCore的系统调用有哪些？大致的功能分类有哪些？(w2l1)
+
 >	uCore的系统调用大约有22个，大致分为如下三类：
 >	
 >	进程控制（如：sys_exit 中止进程，sys_fork 创建一个新进程，sys_wait 等待子进程终止，sys_exec 运行可执行文件，sys_yield 进程主动让出处理器,并将自己等候调度队列队尾，sys_getpid 获取进程标识号，sys_lab6_set_priority 设置进程优先级，sys_sleep 使进程睡眠，sys_kill 结束进程），
