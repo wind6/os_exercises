@@ -98,7 +98,8 @@ int main(int argc, char* argv[]){
 
 > 在syscall函数中为每一个系统调用添加一个计数器，每次调用加一，并且实现一个输出函数。
 
-如何裁减lab1, 实现一个可显示字符串"THU LAB1"且依然能够正确加载ucore OS的bootloader？如果不能完成实现，请说明理由。
+
+如何修改lab1, 实现一个可显示字符串"THU LAB1"且依然能够正确加载ucore OS的bootloader？如果不能完成实现，请说明理由。
 
 - [x]  
 
