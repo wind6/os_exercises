@@ -1,4 +1,3 @@
-
 class mem:
     free = 1
     prev = 0
