@@ -22,7 +22,11 @@ NOTICE
  ```
 - [x]  
 
+>  64bit CPU支持的物理内存大小的理论上限为2^64B，大约16EP，但是现在的个人PC用不到这么多内存，所以不同机型都对内存上限有了不同限制，如Linux内核（版本 2.6.16）可编译成最高支持 64 GB 的内存，Windows VistaUltimate支持超过128G内存。
 >  
+>  多级页表通过将页表分成多个层次的页目录来减少页表对内存的占用，上层页目录存储下层页目录或页表的基址，页表存储页帧号。反置页表通过维护物理页帧号到虚页号的映射表，减少页表对内存的占用，查找时先将虚存地址hash然后查找对应反置页表，遇到冲突根据next项继续查找，若查不到则通过查找外部页表其调入物理内存。
+>  
+
 
 ## 小组思考题
 ---
@@ -31,7 +35,8 @@ NOTICE
 
 - [x]  
 
-> 500=0.9\*150+0.1\*x
+> 500 = 0.9\*150+0.1\*x
+> x = 3650ns
 
 （2）(spoc) 有一台假想的计算机，页大小（page size）为32 Bytes，支持32KB的虚拟地址空间（virtual address space）,有4KB的物理内存空间（physical memory），采用二级页表，一个页目录项（page directory entry ，PDE）大小为1 Byte,一个页表项（page-table entries
 PTEs）大小为1 Byte，1个页目录表大小为32 Bytes，1个页表大小为32 Bytes。页目录基址寄存器（page directory base register，PDBR）保存了页目录表的物理地址（按页对齐）。
@@ -80,6 +85,59 @@ Virtual Address 7268:
     --> pte index:0x13  pte contents:(valid 1, pfn 0x65)
       --> Translates to Physical Address 0xca8 --> Value: 16
 ```
+我的答案
+
+```
+Virtual Address 6c74:
+  --> pde index:0x1b  pde contents:(valid 1, pfn 0x20)
+    --> pte index:0x3  pte contents:(valid 1, pfn 0x61)
+      --> Translates to Physical Address 0xc34 --> Value: 06
+      
+Virtual Address 6b22:
+  --> pde index:0x1a  pde contents:(valid 1, pfn 0x52)
+    --> pte index:0x19  pte contents:(valid 1, pfn 0x47)
+      --> Transflates to Physical Address 0x5e2 --> Value 1a
+
+Virtual Address 03df:
+  --> pde index:0x0  pde contents:(valid 1, pfn 0x5a)
+    --> pte index:0x1e  pte contents:(valid 1, pfn 0x5)
+      --> Transflates to Physical Address 0x161 --> Value 0f
+
+Virtual Address 69dc:
+  --> pde index:0x1a  pde contents:(valid 1, pfn 0x52)
+    --> pte index:0xe  pte contents:(valid 0, pfn 0x7f)
+      --> Fault (page table entry not valid)
+
+Virtual Address 317a:
+  --> pde index:0x1a pde contents:(valid 1, pfn 0x52)
+	--> pte index:0x17 pte contents:(valid 0, pfn 0x7f)
+      --> Fault (page table entry not valid)
+
+Virtual Address 4546:
+  --> pde index:0x1a pde contents:(valid 1, pfn 0x21)
+	--> pte index:0x0a pte contents:(valid 0, pfn 0x7f)
+	  --> Fault (page table entry not valid)
+
+Virtual Address 2c03:
+  --> pde index:01011 pde contents:(valid 1, pfn 0x44)
+	--> pte index:00000 pte contents:(valid 1, pfn 0x57)
+	  --> Transflates to Physical Address 0xae3 --> Value 16                
+      
+Virtual Address 7fd7:
+  --> pde index:0x1f  pde contents:(valid 1, pfn 0x12)
+    --> pte index:0x1e  pte contents:(valid 0, pfn 0x7f)
+      --> Fault (page table entry not valid) 
+           
+Virtual Address 390e:
+  --> pde index:0xe  pde contents:(valid 0, pfn 0x7f)
+    --> Fault (page directory entry not valid)
+    
+Virtual Address 748b:
+  --> pde index:0x1d  pde contents:(valid 1, pfn 0x0)
+    --> pte index:0x4  pte contents:(valid 0, pfn 0x7f)
+      --> Fault (page table entry not valid)
+```
+
 
 
 
@@ -88,7 +146,7 @@ Virtual Address 7268:
 
 （4）假设你有一台支持[反置页表](http://en.wikipedia.org/wiki/Page_table#Inverted_page_table)的机器，请问你如何设计操作系统支持这种类型计算机？请给出设计方案。
 
-
+ (5)[X86的页面结构](http://os.cs.tsinghua.edu.cn/oscourse/OS2015/lecture06#head-1f58ea81c046bd27b196ea2c366d0a2063b304ab)
 --- 
 
 ## 扩展思考题
